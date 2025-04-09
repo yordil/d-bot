@@ -9,7 +9,7 @@ import { ThreadData } from '../types/thread_data';
 import { parse } from 'csv-parse/sync';
 
 const MAX_THREADS_PER_PERSON = 10;
-
+const researcher = '@Researcher';
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
 });
@@ -77,7 +77,7 @@ client.on('messageCreate', async (message) => {
   }
 
   for (const [channelName, entries] of Object.entries(grouped)) {
-    console.log(`🔍 Looking for channel: ${channelName}`);
+    console.log(` Looking for channel: ${channelName}`);
 
     const channel = message.guild?.channels.cache.find(
       (ch): ch is TextChannel =>
@@ -114,7 +114,7 @@ client.on('messageCreate', async (message) => {
       const day = dateParts[1]?.padStart(2, '0');
       const identity = firstRow['Identity'];  // Using first row's identity
 
-      const threadTitle = `${month}/${day} - ${identity}`;
+      const threadTitle = `${month}/${day} ${identity}`;
 
       try {
         const thread = await channel.threads.create({
@@ -129,7 +129,7 @@ client.on('messageCreate', async (message) => {
         for (const chunk of chunkedEntries) {
           const content = chunk
             .map(
-              (row) => `${uploader}\n Deadline: ${month}/${day}\n Order Number: ${row['Order Number']}\n eBay Item Id: ${row['eBay Item Id']}\n Product ID: ${row['product_id']}\n Category: ${row['Category']}\n Keyword: ${row['Keyword']}\n Identity: ${row['Identity']}\n JP Keyword: ${row['JP Keyword']}\n Appendix: ${row['Appendix']}\n Order Detail URL: ${row['Order Detail URL']}\n Est. Profit: ${row['Est. Prfoit']}`
+              (row) => `${researcher}\n Deadline: ${month}/${day}\n Order Number: ${row['Order Number']}\n eBay Item Id: ${row['eBay Item Id']}\n Product ID: ${row['product_id']}\n Category: ${row['Category']}\n Keyword: ${row['Keyword']}\n Identity: ${row['Identity']}\n JP Keyword: ${row['JP Keyword']}\n Appendix: ${row['Appendix']}\n Order Detail URL: ${row['Order Detail URL']}\n Est. Profit: ${row['Est. Prfoit']}`
  
             )
             .join('\n');
