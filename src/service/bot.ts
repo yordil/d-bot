@@ -114,7 +114,7 @@ client.on('messageCreate', async (message) => {
       const day = dateParts[1]?.padStart(2, '0');
       const identity = firstRow['Identity'];  // Using first row's identity
 
-      const threadTitle = `${month}/${day} - ${identity}`;
+      const threadTitle = `${month}/${day} ${identity}`;
 
       try {
         const thread = await channel.threads.create({
