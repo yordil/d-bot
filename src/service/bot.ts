@@ -9,7 +9,6 @@ import { ThreadData } from '../types/thread_data';
 import { parse } from 'csv-parse/sync';
 
 const MAX_THREADS_PER_PERSON = 10;
-const researcher = '@Researcher';
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
 });
@@ -76,6 +75,14 @@ client.on('messageCreate', async (message) => {
     return;
   }
 
+  // 🔸 Get the @Researcher role and prepare the mention string
+  const researcherRole = message.guild?.roles.cache.find(
+    (role) => role.name === 'Researcher'
+  );
+  const researcherMention = researcherRole
+    ? `<@&${researcherRole.id}>`
+    : '@Researcher';
+
   for (const [channelName, entries] of Object.entries(grouped)) {
     console.log(` Looking for channel: ${channelName}`);
 
@@ -129,7 +136,7 @@ client.on('messageCreate', async (message) => {
         for (const chunk of chunkedEntries) {
           const content = chunk
             .map(
-              (row) => `${researcher}\n Deadline: ${month}/${day}\n Order Number: ${row['Order Number']}\n eBay Item Id: ${row['eBay Item Id']}\n Product ID: ${row['product_id']}\n Category: ${row['Category']}\n Keyword: ${row['Keyword']}\n Identity: ${row['Identity']}\n JP Keyword: ${row['JP Keyword']}\n Appendix: ${row['Appendix']}\n Order Detail URL: ${row['Order Detail URL']}\n Est. Profit: ${row['Est. Prfoit']}`
+              (row) => `${researcherMention}\n Deadline: ${month}/${day}\n Order Number: ${row['Order Number']}\n eBay Item Id: ${row['eBay Item Id']}\n Product ID: ${row['product_id']}\n Category: ${row['Category']}\n Keyword: ${row['Keyword']}\n Identity: ${row['Identity']}\n JP Keyword: ${row['JP Keyword']}\n Appendix: ${row['Appendix']}\n Order Detail URL: ${row['Order Detail URL']}\n Est. Profit: ${row['Est. Prfoit']}`
  
             )
             .join('\n');
