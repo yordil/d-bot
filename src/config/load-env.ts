@@ -12,6 +12,7 @@ function loadConfig() {
 
   const config = {
     DISCORD_TOKEN: process.env.DISCORD_TOKEN!,
+ 
   };
 
   return config;

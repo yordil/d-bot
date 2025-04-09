@@ -9,7 +9,7 @@ import { ThreadData } from '../types/thread_data';
 import { parse } from 'csv-parse/sync';
 
 const MAX_THREADS_PER_PERSON = 10;
-
+const researcher = '@Researcher';
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
 });
@@ -129,7 +129,7 @@ client.on('messageCreate', async (message) => {
         for (const chunk of chunkedEntries) {
           const content = chunk
             .map(
-              (row) => `${uploader}\n Deadline: ${month}/${day}\n Order Number: ${row['Order Number']}\n eBay Item Id: ${row['eBay Item Id']}\n Product ID: ${row['product_id']}\n Category: ${row['Category']}\n Keyword: ${row['Keyword']}\n Identity: ${row['Identity']}\n JP Keyword: ${row['JP Keyword']}\n Appendix: ${row['Appendix']}\n Order Detail URL: ${row['Order Detail URL']}\n Est. Profit: ${row['Est. Prfoit']}`
+              (row) => `${researcher}\n Deadline: ${month}/${day}\n Order Number: ${row['Order Number']}\n eBay Item Id: ${row['eBay Item Id']}\n Product ID: ${row['product_id']}\n Category: ${row['Category']}\n Keyword: ${row['Keyword']}\n Identity: ${row['Identity']}\n JP Keyword: ${row['JP Keyword']}\n Appendix: ${row['Appendix']}\n Order Detail URL: ${row['Order Detail URL']}\n Est. Profit: ${row['Est. Prfoit']}`
  
             )
             .join('\n');
